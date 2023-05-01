@@ -28,7 +28,7 @@ public class CS470_GroupProject {
                 //Owner or employee?
                 System.out.println("\nPlease select your position/role:");
                 System.out.println("Enter 1 if you are an owner");
-                System.out.println("Enter 2 if you are an employeee");
+                System.out.println("Enter 2 if you are an employee");
                 System.out.println("Enter 3 to Quit");
                 
                 //Read input
@@ -81,43 +81,81 @@ public class CS470_GroupProject {
                                 break;
                                 }
                         
-                                switch (option) {
-                                    case 1:
-                                    System.out.println("Enter the option of your update");
-                                    System.out.println("Enter 1 to UPDATE a table");
-                                    System.out.println("Enter 2 to DELETE from a table");
-                                    System.out.println("Enter 3 to INSERT in a table");
-                                    System.out.println("Enter 4 to Quit");
+                                switch (owner_option) {
+                                    case 1: //Updates
+                                        System.out.println("Enter the option of your update");
+                                        System.out.println("Enter 1 to UPDATE a table");
+                                        System.out.println("Enter 2 to DELETE from a table");
+                                        System.out.println("Enter 3 to INSERT in a table");
+                                        System.out.println("Enter 4 to Quit");
 
-                                    //Read input
-                                    String up_input = keyboard.readLine();
-                                    int up_option = Integer.parseInt(up_input);
+                                        //Read input
+                                        String up_input = keyboard.readLine();
+                                        int up_option = Integer.parseInt(up_input);
                 
-                                    //To quit
-                                    if (up_option == 4) {
-                                    break;
-                                    }
+                                        //To quit
+                                        if (up_option == 4) {
+                                            break;
+                                        }
+                                        // which table -- MAYBE JUST DO LIKE THREE TABLES -- (Owner, Employee, Department, Shift_Type, Employee_Shift_Schedule, Log_Time)
+                                        System.out.println("Enter the table where you want to implement a change: (Owner, Employee, Log_Time)");
+                                        String table = keyboard.readLine();
+                                        
+                                        
+                                        switch (up_option) {
+                                            case 1: //Update table
+                                                
+                                                if(table == "Owner"){
+                                                
+                                                }else if(table == "Employee"){
+                                                
+                                                }else if(table == "Log_Time"){
+                                                
+                                                }else
+                                                    System.out.println("Invalid table.");
+                                                    break;
+                                                
+                                                /*
+                                                System.out.println("Enter new hospital type:");
+                                                String hos_type = keyboard.readLine();
+                                                String sql1 = "UPDATE Hospitals SET hos_type = '" + hos_type + "' WHERE hos_id = " + hos_id;
+                                                stmt.executeUpdate(sql1);
+                                                System.out.println("Hospital type updated successfully.");
+                                                break;
+                                                */
+                                                
+                                            case 2: //Delete from table
+                                            
+                                            
+                                            case 3: //Insert in table
+                                            
+                                            
+                                            default:
+                                                System.out.println("Invalid option.");
+                                                break;
                                     
-                                    //...
+                                        }   
+                                        
                                     
-                                    case 2:
+                                    case 2: //see view
                                     //which view
                                     //views -- Which employee do you wanna see? or see all?
                                     //if see all -- view to see all employees with their status of the day
                             
-                                    case 3:
+                                    case 3: //privileges
                                     
-                                    //privileges
+                                    
                             
                                     default:
                                         System.out.println("Invalid option.");
                                         break;
                             
-                        
                                 }
+                            
                             }   
                                                     
                         }
+                   
                         
                    case 2: //Employee
                         System.out.println("Enter your first name");
@@ -125,7 +163,7 @@ public class CS470_GroupProject {
                         System.out.println("Enter your ID");
                         String employee_ID = keyboard.readLine();
                         
-                        String sql_employee = "SELECT employee_ID FROM Owner WHERE employee_ID = " + employee_ID;
+                        String sql_employee = "SELECT employee_ID FROM Employee WHERE employee_ID = " + employee_ID;
                         ResultSet check_employee = stmt.executeQuery(sql_employee);
                         if (!check_employee.next()){//sql_employee is not equal(meaning the string is empty)
                             System.out.println("Invalid ID.");
@@ -151,8 +189,8 @@ public class CS470_GroupProject {
                             }
                         
                         
-                            switch (option) {
-                                case 1:
+                            switch (employee_option) {
+                                case 1: //daily view
 
                                     String sql_view1 = "SELECT * FROM daily_view"; // "WHERE employee_ID = " + employee_ID
                                     ResultSet view1 = stmt.executeQuery(sql_view1);
@@ -166,13 +204,13 @@ public class CS470_GroupProject {
                                     */
                                     break;                                
                                 
-                                case 2:
+                                case 2: //weekly view
                                     String sql_view2 = "SELECT * FROM weekly_view";
                                     ResultSet view2 = stmt.executeQuery(sql_view2);
                                     //print?
                                     break;
                             
-                                case 3:
+                                case 3: //view 3
                                     String sql_view3 = "SELECT * FROM view3";
                                     ResultSet view3 = stmt.executeQuery(sql_view3);
                                     //print?
