@@ -49,7 +49,7 @@ public class CS470_GroupProject {
                         //if owner ID corresponds to list ask for password if not break.
                         String sqlCheck = "SELECT owner_ID FROM Owner WHERE owner_ID = " + owner_ID;
                         ResultSet check = stmt.executeQuery(sqlCheck);
-                        if (!check.next()){//owner_ID is not equal(meaning the string is empty)      //check.isEmpty()
+                        if (!check.next()){//owner_ID is not equal(meaning the string is empty)  
                             System.out.println("Invalid ID.");
                             
                         } else { 
@@ -65,11 +65,11 @@ public class CS470_GroupProject {
 
                                 //After validating owner ID and password
                                 System.out.println("Welcome to the Database " + owner_name);
-                                System.out.println("Enter the option you would like to implement");
+                                System.out.println("\nEnter the option you would like to implement");
                         
-                                System.out.println("Enter 1 if you want to change a table"); //Update, deleate...? create? alter?
-                                System.out.println("Enter 2 if you want to see a view");
-                                System.out.println("Enter 3 if you want to grant privileges");
+                                System.out.println("Enter 1 if you want to update an existing table"); //(UPDATE, DELETE, INSERT)
+                                System.out.println("Enter 2 if you want to see a view"); // daily view, weekly view, view3
+                                System.out.println("Enter 3 if you want to grant privileges"); //owner privilege...
                                 System.out.println("Enter 4 to Quit");
                 
                                 //Read input
@@ -83,13 +83,31 @@ public class CS470_GroupProject {
                         
                                 switch (option) {
                                     case 1:
-                                
-                                    //
+                                    System.out.println("Enter the option of your update");
+                                    System.out.println("Enter 1 to UPDATE a table");
+                                    System.out.println("Enter 2 to DELETE from a table");
+                                    System.out.println("Enter 3 to INSERT in a table");
+                                    System.out.println("Enter 4 to Quit");
+
+                                    //Read input
+                                    String up_input = keyboard.readLine();
+                                    int up_option = Integer.parseInt(up_input);
+                
+                                    //To quit
+                                    if (up_option == 4) {
+                                    break;
+                                    }
+                                    
+                                    //...
+                                    
                                     case 2:
+                                    //which view
                                     //views -- Which employee do you wanna see? or see all?
-                                    //if see all -- create a new view to see all employees with their status of the day
+                                    //if see all -- view to see all employees with their status of the day
                             
                                     case 3:
+                                    
+                                    //privileges
                             
                                     default:
                                         System.out.println("Invalid option.");
@@ -116,11 +134,11 @@ public class CS470_GroupProject {
                         
                             //After validating employee ID 
                             System.out.println("Welcome to the Database " + employee_Fname);
-                            System.out.println("Enter the view you would like to see");
+                            System.out.println("\nEnter the view you would like to see");
                         
-                            System.out.println("Enter 1 if you want to see your Dayly view"); 
-                            System.out.println("Enter 2 if you want to see your Weekly view");
-                            System.out.println("Enter 3 if you want to see view3");
+                            System.out.println("Enter 1 if you want to see your Dayly View"); 
+                            System.out.println("Enter 2 if you want to see your Weekly View");
+                            System.out.println("Enter 3 if you want to see your view3");
                             System.out.println("Enter 4 to Quit");
                         
                             //Read input
@@ -136,7 +154,7 @@ public class CS470_GroupProject {
                             switch (option) {
                                 case 1:
 
-                                    String sql_view1 = "SELECT * FROM daily_view";
+                                    String sql_view1 = "SELECT * FROM daily_view"; // "WHERE employee_ID = " + employee_ID
                                     ResultSet view1 = stmt.executeQuery(sql_view1);
                                     //print?
                                     /*
