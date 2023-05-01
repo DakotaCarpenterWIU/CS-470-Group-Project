@@ -105,6 +105,217 @@ public class CS470_GroupProject {
                                         switch (up_option) {
                                             case 1: //Update table
                                                 
+                                                if(table == "Owner"){ //Owner(owner_ID, owner_password)
+                                                    System.out.println("Enter Owner ID you want to update:"); 
+                                                    int owner_id = Integer.parseInt(keyboard.readLine());
+                                                    
+                                                    System.out.println("\nPlease select an option:");
+                                                    System.out.println("Enter 1 to Update Owner's ID");
+                                                    System.out.println("Enter 2 to Update Owner's password");
+                                                    System.out.println("enter 3 to Quit");
+
+                                                    String input_2 = keyboard.readLine();
+                                                    int option_2 = Integer.parseInt(input_2);
+ 
+                                                    if (option_2 == 3) {
+                                                        break;
+                                                    }
+                                                    
+                                                    switch (option_2) {
+                                                        case 1: // ID
+                                                            System.out.println("Enter new Owner ID:");
+                                                            String new_OwnerID = keyboard.readLine();
+                                                            String sql_new1 = "UPDATE Owner SET owner_ID = " + new_OwnerID + " WHERE owner_ID = " + owner_id;
+                                                            stmt.executeUpdate(sql_new1);
+                                                            System.out.println("Owner ID updated successfully.");
+                                                            break;
+
+                                                        case 2: // password
+                                                            System.out.println("Enter new Owner password:");
+                                                            String new_OwnerPassword = keyboard.readLine();
+                                                            String sql_new2 = "UPDATE Owner SET owner_password = " + new_OwnerPassword + " WHERE owner_ID = " + owner_id;
+                                                            stmt.executeUpdate(sql_new2);
+                                                            System.out.println("Owner password updated successfully.");
+                                                            break;
+
+                                                        default:
+                                                            System.out.println("Invalid option.");
+                                                            break;
+                                                    }
+                                                
+                                                }else if(table == "Employee"){ //Employee(employee_ID, employee_Fname, employee_Lname, employee_department, employee_email, employee_phone, employee_dob)
+                                                    System.out.println("Enter Employee ID you want to update:"); 
+                                                    int employee_id = Integer.parseInt(keyboard.readLine());
+                                                    
+                                                    System.out.println("\nPlease select an option:");
+                                                    System.out.println("Enter 1 to Update Employee's ID");
+                                                    System.out.println("Enter 2 to Update Employee's First name");
+                                                    System.out.println("Enter 3 to Update Employee's Last name");
+                                                    System.out.println("Enter 4 to Update Employee's Department");
+                                                    System.out.println("Enter 5 to Update Employee's Email");
+                                                    System.out.println("Enter 6 to Update Employee's Phone");
+                                                    System.out.println("Enter 7 to Update Employee's Date of Birth");
+                                                    System.out.println("enter 8 to Quit");
+
+                                                    String inputEmp = keyboard.readLine();
+                                                    int optionEmp = Integer.parseInt(inputEmp);
+ 
+                                                    if (optionEmp == 8) {
+                                                        break;
+                                                    }
+                                                    
+                                                    switch (optionEmp) {
+                                                        case 1: //ID
+                                                            System.out.println("Enter new Employee ID:");
+                                                            String new_EmployeeID = keyboard.readLine();
+                                                            String sql_new3 = "UPDATE Employee SET employee_ID = " + new_EmployeeID + " WHERE employee_ID = " + employee_id;
+                                                            stmt.executeUpdate(sql_new3);
+                                                            System.out.println("Employee ID updated successfully.");
+                                                            break;
+
+                                                        case 2: // Fname
+                                                            System.out.println("Enter new Employee First name:");
+                                                            String new_EmployeeFname = keyboard.readLine();
+                                                            String sql_new4 = "UPDATE Employee SET employee_Fname = '" + new_EmployeeFname + "' WHERE employee_ID = " + employee_id;
+                                                            stmt.executeUpdate(sql_new4);
+                                                            System.out.println("Employee First name updated successfully.");
+                                                            break;
+                                                            
+                                                        case 3: // Lname
+                                                            System.out.println("Enter new Employee Last name:");
+                                                            String new_EmployeeLname = keyboard.readLine();
+                                                            String sql_new5 = "UPDATE Employee SET employee_Fname = '" + new_EmployeeLname + "' WHERE employee_ID = " + employee_id;
+                                                            stmt.executeUpdate(sql_new5);
+                                                            System.out.println("Employee Last name updated successfully.");
+                                                            break;
+                                                        
+                                                        case 4: // Department
+                                                            System.out.println("Enter new Employee Department:");
+                                                            String new_EmployeeDepartment = keyboard.readLine();
+                                                            String sql_new6 = "UPDATE Employee SET employee_department = '" + new_EmployeeDepartment + "' WHERE employee_ID = " + employee_id;
+                                                            stmt.executeUpdate(sql_new6);
+                                                            System.out.println("Employee Department updated successfully.");
+                                                            break;
+                                                        
+                                                        case 5: // Email
+                                                            System.out.println("Enter new Employee Email:");
+                                                            String new_EmployeeEmail = keyboard.readLine();
+                                                            String sql_new7 = "UPDATE Employee SET employee_email = '" + new_EmployeeEmail + "' WHERE employee_ID = " + employee_id;
+                                                            stmt.executeUpdate(sql_new7);
+                                                            System.out.println("Employee Email updated successfully.");
+                                                            break;
+                                                        
+                                                        case 6: // Phone
+                                                            System.out.println("Enter new Employee Phone:");
+                                                            String new_EmployeePhone = keyboard.readLine();
+                                                            String sql_new8 = "UPDATE Employee SET employee_phone = '" + new_EmployeePhone + "' WHERE employee_ID = " + employee_id;
+                                                            stmt.executeUpdate(sql_new8);
+                                                            System.out.println("Employee Phone updated successfully.");
+                                                            break;
+                                                        
+                                                        case 7: // Date of Birth
+                                                            System.out.println("Enter new Employee Date of Birth:");
+                                                            String new_EmployeeDoB = keyboard.readLine();
+                                                            String sql_new9 = "UPDATE Employee SET employee_dob = '" + new_EmployeeDoB + "' WHERE employee_ID = " + employee_id;
+                                                            stmt.executeUpdate(sql_new9);
+                                                            System.out.println("Employee Date of Birth updated successfully.");
+                                                            break;
+
+                                                        default:
+                                                            System.out.println("Invalid option.");
+                                                            break;
+                                                    }
+                                                
+                                                }else if(table == "Log_Time"){ //Log_Time(log_ID, employee_ID, shift_ID, log_date, login_time, logout_time, total_worked_time)
+                                                    System.out.println("Enter the Log ID you want to update:"); 
+                                                    int log_id = Integer.parseInt(keyboard.readLine());
+                                                    
+                                                    System.out.println("\nPlease select an option:");
+                                                    System.out.println("Enter 1 to Update Log's ID");
+                                                    System.out.println("Enter 2 to Update Log's employee ID");
+                                                    System.out.println("Enter 3 to Update Log's Shift ID");
+                                                    System.out.println("Enter 4 to Update Log's Date");
+                                                    System.out.println("Enter 5 to Update Log's login time");
+                                                    System.out.println("Enter 6 to Update Log's logout time");
+                                                    System.out.println("Enter 7 to Update Log's total worked hours");
+                                                    System.out.println("enter 8 to Quit");
+
+                                                    String inputLog = keyboard.readLine();
+                                                    int optionLog = Integer.parseInt(inputLog);
+ 
+                                                    if (optionLog == 8) {
+                                                        break;
+                                                    }
+                                                    
+                                                    switch (optionLog) {
+                                                        case 1: //Log ID
+                                                            System.out.println("Enter new Log ID:");
+                                                            String new_LogID = keyboard.readLine();
+                                                            String sql_1 = "UPDATE Log_Time SET log_ID = " + new_LogID + " WHERE log_ID = " + log_id;
+                                                            stmt.executeUpdate(sql_1);
+                                                            System.out.println("Log_Time log ID updated successfully.");
+                                                            break;
+
+                                                        case 2: // employee ID
+                                                            System.out.println("Enter new Log_Time Employee ID:");
+                                                            String new_LogEmployeeID = keyboard.readLine();
+                                                            String sql_2 = "UPDATE Log_Time SET employee_ID = " + new_LogEmployeeID + " WHERE log_ID = " + log_id;
+                                                            stmt.executeUpdate(sql_2);
+                                                            System.out.println("Log_Time log ID updated successfully.");
+                                                            break;
+                                                            
+                                                        case 3: // Shift ID
+                                                            System.out.println("Enter new Log_Time Shift ID:");
+                                                            String new_LogShiftID = keyboard.readLine();
+                                                            String sql_3 = "UPDATE Log_Time SET shift_ID = '" + new_LogShiftID + "' WHERE log_ID = " + log_id;
+                                                            stmt.executeUpdate(sql_3);
+                                                            System.out.println("Log_Time Shift ID updated successfully.");
+                                                            break;
+                                                        
+                                                        case 4: // Date
+                                                            System.out.println("Enter new Date:");
+                                                            String new_LogDate = keyboard.readLine();
+                                                            String sql_4 = "UPDATE Log_Time SET log_date = '" + new_LogDate + "' WHERE log_ID = " + log_id;
+                                                            stmt.executeUpdate(sql_4);
+                                                            System.out.println("Log_Time Date updated successfully.");
+                                                            break;
+                                                        
+                                                        case 5: // login
+                                                            System.out.println("Enter new Login time:");
+                                                            String new_login = keyboard.readLine();
+                                                            String sql_5 = "UPDATE Log_Time SET login_time = '" + new_login + "' WHERE log_ID = " + log_id;
+                                                            stmt.executeUpdate(sql_5);
+                                                            System.out.println("Log_Time login time updated successfully.");
+                                                            break;
+                                                        
+                                                        case 6: // logout
+                                                            System.out.println("Enter new Log_Time Phone:");
+                                                            String new_logout = keyboard.readLine();
+                                                            String sql_6 = "UPDATE Log_Time SET logout_time = '" + new_logout + "' WHERE log_ID = " + log_id;
+                                                            stmt.executeUpdate(sql_6);
+                                                            System.out.println("Log_Time logout time updated successfully.");
+                                                            break;
+                                                        
+                                                        case 7: // total worked time
+                                                            System.out.println("Enter new total worked hours:");
+                                                            String new_TWT = keyboard.readLine();
+                                                            String sql_7 = "UPDATE Log_Time SET total_worked_time = '" + new_TWT + "' WHERE log_ID = " + log_id;
+                                                            stmt.executeUpdate(sql_7);
+                                                            System.out.println("Log_Time total worked time updated successfully.");
+                                                            break;
+
+                                                        default:
+                                                            System.out.println("Invalid option.");
+                                                            break;
+                                                    }
+                                                
+                                                }else
+                                                    System.out.println("Invalid table.");
+                                                    break;
+                                               
+                                                
+                                            case 2: //Delete from table
+                                            
                                                 if(table == "Owner"){
                                                 
                                                 }else if(table == "Employee"){
@@ -114,21 +325,18 @@ public class CS470_GroupProject {
                                                 }else
                                                     System.out.println("Invalid table.");
                                                     break;
-                                                
-                                                /*
-                                                System.out.println("Enter new hospital type:");
-                                                String hos_type = keyboard.readLine();
-                                                String sql1 = "UPDATE Hospitals SET hos_type = '" + hos_type + "' WHERE hos_id = " + hos_id;
-                                                stmt.executeUpdate(sql1);
-                                                System.out.println("Hospital type updated successfully.");
-                                                break;
-                                                */
-                                                
-                                            case 2: //Delete from table
-                                            
                                             
                                             case 3: //Insert in table
                                             
+                                                if(table == "Owner"){
+                                                
+                                                }else if(table == "Employee"){
+                                                
+                                                }else if(table == "Log_Time"){
+                                                
+                                                }else
+                                                    System.out.println("Invalid table.");
+                                                    break;
                                             
                                             default:
                                                 System.out.println("Invalid option.");
@@ -142,7 +350,7 @@ public class CS470_GroupProject {
                                     //views -- Which employee do you wanna see? or see all?
                                     //if see all -- view to see all employees with their status of the day
                             
-                                    case 3: //privileges
+                                    case 3: //grant privileges
                                     
                                     
                             
