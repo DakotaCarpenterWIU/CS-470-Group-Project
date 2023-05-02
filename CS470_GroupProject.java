@@ -106,22 +106,22 @@ public class CS470_GroupProject {
                                             case 1: //Update table
                                                 
                                                 if(table == "Owner"){ //Owner(owner_ID, owner_password)
-                                                    System.out.println("Enter Owner ID you want to update:"); 
-                                                    int owner_id = Integer.parseInt(keyboard.readLine());
                                                     
                                                     System.out.println("\nPlease select an option:");
                                                     System.out.println("Enter 1 to Update Owner's ID");
                                                     System.out.println("Enter 2 to Update Owner's password");
                                                     System.out.println("enter 3 to Quit");
 
-                                                    String input_2 = keyboard.readLine();
-                                                    int option_2 = Integer.parseInt(input_2);
+                                                    String input_update = keyboard.readLine();
+                                                    int option_update = Integer.parseInt(input_update);
  
-                                                    if (option_2 == 3) {
+                                                    if (option_update == 3) {
                                                         break;
                                                     }
+                                                    System.out.println("Enter Owner ID you want to update:"); 
+                                                    int owner_id = Integer.parseInt(keyboard.readLine());
                                                     
-                                                    switch (option_2) {
+                                                    switch (option_update) {
                                                         case 1: // ID
                                                             System.out.println("Enter new Owner ID:");
                                                             String new_OwnerID = keyboard.readLine();
@@ -144,9 +144,7 @@ public class CS470_GroupProject {
                                                     }
                                                 
                                                 }else if(table == "Employee"){ //Employee(employee_ID, employee_Fname, employee_Lname, employee_department, employee_email, employee_phone, employee_dob)
-                                                    System.out.println("Enter Employee ID you want to update:"); 
-                                                    int employee_id = Integer.parseInt(keyboard.readLine());
-                                                    
+                                             
                                                     System.out.println("\nPlease select an option:");
                                                     System.out.println("Enter 1 to Update Employee's ID");
                                                     System.out.println("Enter 2 to Update Employee's First name");
@@ -163,6 +161,8 @@ public class CS470_GroupProject {
                                                     if (optionEmp == 8) {
                                                         break;
                                                     }
+                                                    System.out.println("Enter Employee ID you want to update:"); 
+                                                    int employee_id = Integer.parseInt(keyboard.readLine());
                                                     
                                                     switch (optionEmp) {
                                                         case 1: //ID
@@ -206,7 +206,7 @@ public class CS470_GroupProject {
                                                             break;
                                                         
                                                         case 6: // Phone
-                                                            System.out.println("Enter new Employee Phone:");
+                                                            System.out.println("Enter new Employee Phone: (format: 000-000-0000)");
                                                             String new_EmployeePhone = keyboard.readLine();
                                                             String sql_new8 = "UPDATE Employee SET employee_phone = '" + new_EmployeePhone + "' WHERE employee_ID = " + employee_id;
                                                             stmt.executeUpdate(sql_new8);
@@ -214,9 +214,10 @@ public class CS470_GroupProject {
                                                             break;
                                                         
                                                         case 7: // Date of Birth
-                                                            System.out.println("Enter new Employee Date of Birth:");
+                                                            System.out.println("Enter new Employee Date of Birth: (format: YYYY-MM-DD)"); //TO_DATE('1999-10-10', 'YYYY-MM-DD')
                                                             String new_EmployeeDoB = keyboard.readLine();
-                                                            String sql_new9 = "UPDATE Employee SET employee_dob = '" + new_EmployeeDoB + "' WHERE employee_ID = " + employee_id;
+                                                            String sql_new9 = "UPDATE Employee SET employee_dob = TO_DATE('" + new_EmployeeDoB + "', 'YYYY-MM-DD') WHERE employee_ID = " + employee_id;
+                                                            //UPDATE Employee SET employee_dob = TO_DATE('1999-10-11', 'YYYY-MM-DD') WHERE employee_ID = 1110;
                                                             stmt.executeUpdate(sql_new9);
                                                             System.out.println("Employee Date of Birth updated successfully.");
                                                             break;
@@ -227,25 +228,25 @@ public class CS470_GroupProject {
                                                     }
                                                 
                                                 }else if(table == "Log_Time"){ //Log_Time(log_ID, employee_ID, shift_ID, log_date, login_time, logout_time, total_worked_time)
-                                                    System.out.println("Enter the Log ID you want to update:"); 
-                                                    int log_id = Integer.parseInt(keyboard.readLine());
-                                                    
+                               
                                                     System.out.println("\nPlease select an option:");
                                                     System.out.println("Enter 1 to Update Log's ID");
                                                     System.out.println("Enter 2 to Update Log's employee ID");
                                                     System.out.println("Enter 3 to Update Log's Shift ID");
-                                                    System.out.println("Enter 4 to Update Log's Date");
-                                                    System.out.println("Enter 5 to Update Log's login time");
-                                                    System.out.println("Enter 6 to Update Log's logout time");
-                                                    System.out.println("Enter 7 to Update Log's total worked hours");
-                                                    System.out.println("enter 8 to Quit");
+                                                    //System.out.println("Enter 4 to Update Log's Date"); //The date in Log_Time is set as the current date, so it cannot be updated
+                                                    System.out.println("Enter 4 to Update Log's login time");
+                                                    System.out.println("Enter 5 to Update Log's logout time");
+                                                    //System.out.println("Enter 7 to Update Log's total worked hours"); //Total worked time is an automatic calculation so it cannot be updated:
+                                                    System.out.println("enter 6 to Quit");
 
                                                     String inputLog = keyboard.readLine();
                                                     int optionLog = Integer.parseInt(inputLog);
  
-                                                    if (optionLog == 8) {
+                                                    if (optionLog == 6) {
                                                         break;
                                                     }
+                                                    System.out.println("Enter the Log ID you want to update:"); 
+                                                    int log_id = Integer.parseInt(keyboard.readLine());
                                                     
                                                     switch (optionLog) {
                                                         case 1: //Log ID
@@ -267,43 +268,28 @@ public class CS470_GroupProject {
                                                         case 3: // Shift ID
                                                             System.out.println("Enter new Log_Time Shift ID:");
                                                             String new_LogShiftID = keyboard.readLine();
-                                                            String sql_3 = "UPDATE Log_Time SET shift_ID = '" + new_LogShiftID + "' WHERE log_ID = " + log_id;
+                                                            String sql_3 = "UPDATE Log_Time SET shift_ID = " + new_LogShiftID + " WHERE log_ID = " + log_id;
                                                             stmt.executeUpdate(sql_3);
                                                             System.out.println("Log_Time Shift ID updated successfully.");
                                                             break;
                                                         
-                                                        case 4: // Date
-                                                            System.out.println("Enter new Date:");
-                                                            String new_LogDate = keyboard.readLine();
-                                                            String sql_4 = "UPDATE Log_Time SET log_date = '" + new_LogDate + "' WHERE log_ID = " + log_id;
-                                                            stmt.executeUpdate(sql_4);
-                                                            System.out.println("Log_Time Date updated successfully.");
-                                                            break;
-                                                        
-                                                        case 5: // login
-                                                            System.out.println("Enter new Login time:");
+                                                        case 4: // login
+                                                            System.out.println("Enter new Login time: (format: 00:00:00)");
                                                             String new_login = keyboard.readLine();
-                                                            String sql_5 = "UPDATE Log_Time SET login_time = '" + new_login + "' WHERE log_ID = " + log_id;
+                                                            String sql_5 = "UPDATE Log_Time SET login_time = TO_TIMESTAMP(TO_CHAR(TRUNC(SYSTIMESTAMP), 'YYYY-MM-DD') || '" + new_login + "', 'YYYY-MM-DD HH24:MI:SS') WHERE log_ID = " + log_id; 
+                                                            //UPDATE Log_Time SET login_time = TO_TIMESTAMP(TO_CHAR(TRUNC(SYSTIMESTAMP), 'YYYY-MM-DD') || ' 05:00:00', 'YYYY-MM-DD HH24:MI:SS') WHERE log_ID = 6610;
                                                             stmt.executeUpdate(sql_5);
                                                             System.out.println("Log_Time login time updated successfully.");
                                                             break;
                                                         
-                                                        case 6: // logout
-                                                            System.out.println("Enter new Log_Time Phone:");
+                                                        case 5: // logout
+                                                            System.out.println("Enter new Log_Time Phone: (format: 00:00:00)");
                                                             String new_logout = keyboard.readLine();
-                                                            String sql_6 = "UPDATE Log_Time SET logout_time = '" + new_logout + "' WHERE log_ID = " + log_id;
+                                                            String sql_6 = "UPDATE Log_Time SET logout_time = TO_TIMESTAMP(TO_CHAR(TRUNC(SYSTIMESTAMP), 'YYYY-MM-DD') || '" + new_logout + "', 'YYYY-MM-DD HH24:MI:SS') WHERE log_ID = " + log_id;
                                                             stmt.executeUpdate(sql_6);
                                                             System.out.println("Log_Time logout time updated successfully.");
                                                             break;
-                                                        
-                                                        case 7: // total worked time
-                                                            System.out.println("Enter new total worked hours:");
-                                                            String new_TWT = keyboard.readLine();
-                                                            String sql_7 = "UPDATE Log_Time SET total_worked_time = '" + new_TWT + "' WHERE log_ID = " + log_id;
-                                                            stmt.executeUpdate(sql_7);
-                                                            System.out.println("Log_Time total worked time updated successfully.");
-                                                            break;
-
+                                                 
                                                         default:
                                                             System.out.println("Invalid option.");
                                                             break;
@@ -316,11 +302,159 @@ public class CS470_GroupProject {
                                                 
                                             case 2: //Delete from table
                                             
-                                                if(table == "Owner"){
+                                                if(table == "Owner"){ //Owner(owner_ID, owner_password)                                                    
+                                                    
+                                                    System.out.println("\nPlease select an option:");
+                                                    System.out.println("Enter 1 to Delete according to Owner's ID");
+                                                    System.out.println("Enter 2 to Delete according to Owner's password");
+                                                    System.out.println("enter 3 to Quit");
+
+                                                    String input_delete = keyboard.readLine();
+                                                    int option_delete = Integer.parseInt(input_delete);
+ 
+                                                    if (option_delete == 3) {
+                                                        break;
+                                                    }
+                                                  
+                                                    switch (option_delete) { //DELETE FROM table WHERE ...
+                                                        case 1: // ID
+                                                            System.out.println("Enter Owner ID from where you want to delete:"); 
+                                                            int owner_id2 = Integer.parseInt(keyboard.readLine());
+                                                            String sql_old1 = "DELETE FROM Owner WHERE owner_ID = " + owner_id2;
+                                                            stmt.executeUpdate(sql_old1);
+                                                            System.out.println("Row/s according to Owner ID deleted successfully.");
+                                                            break;
+
+                                                        case 2: // password
+                                                            System.out.println("Enter Owner password from where you want to delete:");
+                                                            String old_OwnerPassword = keyboard.readLine();
+                                                            String sql_old2 = "DELETE FROM Owner WHERE owner_password = " + old_OwnerPassword;
+                                                            stmt.executeUpdate(sql_old2);
+                                                            System.out.println("Row/s according to Owner password deleted successfully.");
+                                                            break;
+
+                                                        default:
+                                                            System.out.println("Invalid option.");
+                                                            break;
+                                                    }
+                                                 
+                                                }else if(table == "Employee"){ //Employee(employee_ID, employee_Fname, employee_Lname, employee_department, employee_email, employee_phone, employee_dob)                                                   
+                                                    
+                                                    System.out.println("\nPlease select an option:");
+                                                    System.out.println("Enter 1 to Delete according to Employee's ID");
+                                                    //System.out.println("Enter 2 to Delete according to Employee's First name"); does not make sense to delete from first or last name
+                                                    //System.out.println("Enter 3 to Delete according to Employee's Last name");
+                                                    System.out.println("Enter 2 to Delete according to Employee's Department");
+                                                    System.out.println("Enter 3 to Delete according to Employee's Email");
+                                                    System.out.println("Enter 4 to Delete according to Employee's Phone");
+                                                    System.out.println("Enter 5 to Delete according to Employee's Date of Birth");
+                                                    System.out.println("enter 6 to Quit");
+
+                                                    String inputEmp2 = keyboard.readLine();
+                                                    int optionEmp2 = Integer.parseInt(inputEmp2);
+ 
+                                                    if (optionEmp2 == 6) {
+                                                        break;
+                                                    }
+                                                    
+                                                    switch (optionEmp2) {
+                                                        case 1: //ID
+                                                            System.out.println("Enter Employee ID from where you want to delete:");
+                                                            String old_EmployeeID = keyboard.readLine();
+                                                            String sql_old3 = "DELETE FROM Employee WHERE employee_ID = " + old_EmployeeID;
+                                                            stmt.executeUpdate(sql_old3);
+                                                            System.out.println("Row/s according to Employee ID deleted successfully.");
+                                                            break;
+                                                        
+                                                        case 2: // Department
+                                                            System.out.println("Enter Employee Department from where you want to delete:");
+                                                            String old_EmployeeDepartment = keyboard.readLine();
+                                                            String sql_old6 = "DELETE FROM Employee WHERE employee_department = '" + old_EmployeeDepartment + " '";
+                                                            stmt.executeUpdate(sql_old6);
+                                                            System.out.println("Row/s according to Employee Department deleted successfully.");
+                                                            break;
+                                                        
+                                                        case 3: // Email
+                                                            System.out.println("Enter Employee Email from where you want to delete:");
+                                                            String old_EmployeeEmail = keyboard.readLine();
+                                                            String sql_old7 = "DELETE FROM Employee WHERE employee_email = '" + old_EmployeeEmail + " '";
+                                                            stmt.executeUpdate(sql_old7);
+                                                            System.out.println("Row/s according to Employee Email deleted successfully.");
+                                                            break;
+                                                        
+                                                        case 4: // Phone
+                                                            System.out.println("Enter Employee Phone from where you want to delete: (format: 000-000-0000)");
+                                                            String old_EmployeePhone = keyboard.readLine();
+                                                            String sql_old8 = "DELETE FROM Employee WHERE employee_phone = '" + old_EmployeePhone + " '";
+                                                            stmt.executeUpdate(sql_old8);
+                                                            System.out.println("Row/s according to Employee Phone deleted successfully.");
+                                                            break;
+                                                        
+                                                        case 5: // Date of Birth
+                                                            System.out.println("Enter Employee Date of Birth from where you want to delete: (format: YYYY-MM-DD)"); //TO_DATE('1999-10-10', 'YYYY-MM-DD')
+                                                            String old_EmployeeDoB = keyboard.readLine();
+                                                            String sql_old9 = "DELETE FROM Employee WHERE employee_dob = TO_DATE('" + old_EmployeeDoB + "', 'YYYY-MM-DD')";
+                                                            stmt.executeUpdate(sql_old9);
+                                                            System.out.println("Row/s according to Employee Date of Birth deleted successfully.");
+                                                            break;
+                                                            
+                                                            // should we add a free option? Like the user can enter their choice of "WHERE..."
+
+                                                        default:
+                                                            System.out.println("Invalid option.");
+                                                            break;
+                                                    }
                                                 
-                                                }else if(table == "Employee"){
-                                                
-                                                }else if(table == "Log_Time"){
+                                                }else if(table == "Log_Time"){ //Log_Time(log_ID, employee_ID, shift_ID, log_date, login_time, logout_time, total_worked_time
+                                                    
+                                                    System.out.println("\nPlease select an option:");
+                                                    System.out.println("Enter 1 to Update Log's ID");
+                                                    System.out.println("Enter 2 to Update Log's employee ID");
+                                                    System.out.println("Enter 3 to Update Log's Shift ID");
+                                                    //System.out.println("Enter 4 to Update Log's Date"); //current date
+                                                    //System.out.println("Enter 5 to Update Log's login time"); //does not make sense to delete from login, logout, and total hours 
+                                                    //System.out.println("Enter 6 to Update Log's logout time");
+                                                    //System.out.println("Enter 7 to Update Log's total worked hours");
+                                                    System.out.println("enter 4 to Quit");
+
+                                                    String inputLog = keyboard.readLine();
+                                                    int optionLog = Integer.parseInt(inputLog);
+ 
+                                                    if (optionLog == 4) {
+                                                        break;
+                                                    }
+                                                    
+                                                    switch (optionLog) {
+                                                        case 1: //Log ID
+                                                            System.out.println("Enter Log ID from where you want to delete:");
+                                                            String old_LogID = keyboard.readLine();
+                                                            String oldsql_1 = "DELETE FROM Log_Time WHERE log_ID = " + old_LogID;
+                                                            stmt.executeUpdate(oldsql_1);
+                                                            System.out.println("Row/s according to Log_Time log ID deleted successfully.");
+                                                            break;
+
+                                                        case 2: // employee ID
+                                                            System.out.println("Enter Log_Time Employee ID from where you want to delete:");
+                                                            String old_LogEmployeeID = keyboard.readLine();
+                                                            String oldsql_2 = "DELETE FROM Log_Time WHERE employee_ID = " + old_LogEmployeeID;
+                                                            stmt.executeUpdate(oldsql_2);
+                                                            System.out.println("Row/s according to Log_Time log ID deleted successfully.");
+                                                            break;
+                                                            
+                                                        case 3: // Shift ID
+                                                            System.out.println("Enter Log_Time Shift ID from where you want to delete::");
+                                                            String old_LogShiftID = keyboard.readLine();
+                                                            String oldsql_3 = "DELETE FROM Log_Time WHERE shift_ID = " + old_LogShiftID;
+                                                            stmt.executeUpdate(oldsql_3);
+                                                            System.out.println("Row/s according to Log_Time Shift ID deleted successfully.");
+                                                            break;
+                                                            
+                                                            // should we add a free option? Like the user can enter their choice of "WHERE..."
+                    
+                                                      default:
+                                                            System.out.println("Invalid option.");
+                                                            break;
+                                                    }
                                                 
                                                 }else
                                                     System.out.println("Invalid table.");
