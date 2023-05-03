@@ -68,7 +68,7 @@ public class CS470_GroupProject {
                                 System.out.println("\nEnter the option you would like to implement");
                         
                                 System.out.println("Enter 1 if you want to update an existing table"); //(UPDATE, DELETE, INSERT)
-                                System.out.println("Enter 2 if you want to see a view"); // daily view, weekly view, view3
+                                System.out.println("Enter 2 if you want to see a view"); // Owner = 3 views (daily_status, weekly_hours, employee_weekly_status)
                                 System.out.println("Enter 3 if you want to grant privileges"); //owner privilege...
                                 System.out.println("Enter 4 to Quit");
                 
@@ -342,7 +342,7 @@ public class CS470_GroupProject {
                                                     
                                                     System.out.println("\nPlease select an option:");
                                                     System.out.println("Enter 1 to Delete according to Employee's ID");
-                                                    //System.out.println("Enter 2 to Delete according to Employee's First name"); does not make sense to delete from first or last name
+                                                    //System.out.println("Enter 2 to Delete according to Employee's First name"); does not make sense to delete from first or last name (can be the same and not same person)
                                                     //System.out.println("Enter 3 to Delete according to Employee's Last name");
                                                     System.out.println("Enter 2 to Delete according to Employee's Department");
                                                     System.out.println("Enter 3 to Delete according to Employee's Email");
@@ -398,7 +398,7 @@ public class CS470_GroupProject {
                                                             System.out.println("Row/s according to Employee Date of Birth deleted successfully.");
                                                             break;
                                                             
-                                                            // should we add a free option? Like the user can enter their choice of "WHERE..."
+                                                            // should we add a free option? Like the user can enter their choice of "WHERE (+condition)"
 
                                                         default:
                                                             System.out.println("Invalid option.");
@@ -449,7 +449,7 @@ public class CS470_GroupProject {
                                                             System.out.println("Row/s according to Log_Time Shift ID deleted successfully.");
                                                             break;
                                                             
-                                                            // should we add a free option? Like the user can enter their choice of "WHERE..."
+                                                            // should we add a free option? Like the user can enter their choice of "WHERE (+condition)"
                     
                                                       default:
                                                             System.out.println("Invalid option.");
@@ -459,7 +459,7 @@ public class CS470_GroupProject {
                                                 }else
                                                     System.out.println("Invalid table.");
                                                     break;
-                                            
+//STILL NEED TO WORK HERE                                             
                                             case 3: //Insert in table
                                             
                                                 if(table == "Owner"){
@@ -480,13 +480,103 @@ public class CS470_GroupProject {
                                         
                                     
                                     case 2: //see view
-                                    //which view
-                                    //views -- Which employee do you wanna see? or see all?
-                                    //if see all -- view to see all employees with their status of the day
+                              
+                                        System.out.println("\nEnter the view you would like to see"); //which view
+                        
+                                        System.out.println("Enter 1 if you want to see the employees daily status"); //Owner has access to 3 views (daily_status, weekly_hours, employee_weekly_status)
+                                        System.out.println("Enter 2 if you want to see the employees weekly hours");
+                                        System.out.println("Enter 3 if you want to see the employees weekly status");
+                                        System.out.println("Enter 4 to Quit");
+                        
+                                        //Read input
+                                        String owner_view_input = keyboard.readLine();
+                                        int owner_view_option = Integer.parseInt(owner_view_input);
+                
+                                        //To quit
+                                        if (owner_view_option == 4) {
+                                            break;
+                                        }
+                        
+                                      
+                                        switch (owner_view_option) {
+                                            case 1: //daily_status view
+                                                
+                                                //Erase/Drop previous view
+                                                String sql_drop1 = "DROP VIEW daily_status";
+                                                stmt.executeQuery(sql_drop1);
+                                                
+                                                String sql_view1 = "CREATE VIEW daily_status AS " +
+                                                                   " SELECT lt.employee_ID, e.employee_Fname AS First_Name, e.employee_Lname AS Last_Name, " + 
+                                                                       " CASE WHEN lt.logout_time - lt.login_time <= INTERVAL '8' HOUR THEN 'On time' " + 
+                                                                           " ELSE 'Late' " + 
+                                                                       " END AS status " + 
+                                                                   " FROM Log_Time lt JOIN Employee e ON e.employee_ID = lt.employee_ID";
+                                                stmt.executeQuery(sql_view1); 
+                                                
+                                                String runView1 = "SELECT * FROM daily_status"; //Does this show the view in SQL Developer?
+                                                stmt.executeQuery(runView1); //ResultSet view1 = 
+                                                //print?
+                                                /*
+                                                while (view1.next()) {
+                                                String times = view1.getString("");
+                                                System.out.println(times);
+                                                }
+                                                view1.close();
+                                                */
+                                                break;                                
+                                
+                                            case 2: //weekly_hours view
+                                            
+                                                //Erase/Drop previous view
+                                                String sql_drop2 = "DROP VIEW weekly_hours";
+                                                stmt.executeQuery(sql_drop2);
+                                                
+                                                String sql_view2 = "CREATE VIEW weekly_hours AS " +
+                                                                   " SELECT lt.employee_ID, e.employee_Fname AS First_Name, e.employee_Lname AS Last_Name, " + 
+                                                                       " TRUNC(lt.log_date, 'IW') as week_start_date,  -- how do we know it is the whole week (7 days) " + 
+                                                                       " SUM(EXTRACT(HOUR FROM (lt.total_worked_time))) as weekly_worked_hours " + 
+                                                                   " FROM Log_Time lt JOIN Employee e ON e.employee_ID = lt.employee_ID" + 
+                                                                   " GROUP BY lt.employee_ID, e.employee_Fname, e.employee_Lname, TRUNC(lt.log_date, 'IW')";
+                                                stmt.executeQuery(sql_view2);
+                                                
+                                                String runview2 = "SELECT * FROM weekly_hours";
+                                                stmt.executeQuery(runview2); //ResultSet view2 = 
+                                                //print?
+                                                break;
+                                                
+                                            case 3: //employee_weekly_status view
+                                                //Need employee ID Owner wants to access
+                                                System.out.println("\nEnter the employee's ID you want to see the view of");
+                                                String which_emp = keyboard.readLine();
+                                                int emplo_id = Integer.parseInt(which_emp);
+                                            
+                                                //Erase/Drop previous view
+                                                String sql_drop3 = "DROP VIEW employee_weekly_status";
+                                                stmt.executeQuery(sql_drop3);
+                                                
+                                                //VIEW NOT CREATED YET, THIS IS AN EXAMPLE TO PASTE ON TOP -- IN THE WHERE CLAUSE ASKED ID
+                                                String sql_view3 = "CREATE VIEW employee_weekly_status AS " +
+                                                                   " SELECT lt.employee_ID, e.employee_Fname AS First_Name, e.employee_Lname AS Last_Name, " + 
+                                                                       " TRUNC(lt.log_date, 'IW') as week_start_date,  -- how do we know it is the whole week (7 days) " + 
+                                                                       " SUM(EXTRACT(HOUR FROM (lt.total_worked_time))) as weekly_worked_hours " + 
+                                                                   " FROM Log_Time lt JOIN Employee e ON e.employee_ID = lt.employee_ID" + 
+                                                                   " GROUP BY lt.employee_ID, e.employee_Fname, e.employee_Lname, TRUNC(lt.log_date, 'IW')";
+                                                stmt.executeQuery(sql_view3);
+                                                
+                                                String runview3 = "SELECT * FROM employee_weekly_status";
+                                                stmt.executeQuery(runview3); //ResultSet view3 =
+                                                //print?
+                                                break;
+                            
+                                            default:
+                                                System.out.println("Invalid option.");
+                                                break;
+                           
+                                        }
                             
                                     case 3: //grant privileges
                                     
-                                    
+//STILL NEED TO WORK HERE                                 
                             
                                     default:
                                         System.out.println("Invalid option.");
@@ -516,53 +606,69 @@ public class CS470_GroupProject {
                             System.out.println("Welcome to the Database " + employee_Fname);
                             System.out.println("\nEnter the view you would like to see");
                         
-                            System.out.println("Enter 1 if you want to see your Dayly View"); 
-                            System.out.println("Enter 2 if you want to see your Weekly View");
-                            System.out.println("Enter 3 if you want to see your view3");
-                            System.out.println("Enter 4 to Quit");
+                            System.out.println("Enter 1 if you want to see your hours per week View"); //Employee has access to 2 views
+                            System.out.println("Enter 2 if you want to see your status per week View");
+                            System.out.println("Enter 3 to Quit");
                         
                             //Read input
                             String employee_input = keyboard.readLine();
                             int employee_option = Integer.parseInt(employee_input);
                 
                             //To quit
-                            if (employee_option == 4) {
+                            if (employee_option == 3) {
                                 break;
                             }
                         
-                        
+                     
                             switch (employee_option) {
-                                case 1: //daily view
+                                case 1: //employee_weekly_hours view
 
-                                    String sql_view1 = "SELECT * FROM daily_view"; // "WHERE employee_ID = " + employee_ID
-                                    ResultSet view1 = stmt.executeQuery(sql_view1);
+                                    //Need employee ID -- employee_ID (asked at the beginning
+                                            
+                                    //Erase/Drop previous view
+                                    String sql_drop4 = "DROP VIEW employee_weekly_hours";
+                                    stmt.executeQuery(sql_drop4);
+                                    
+                                    String sql_view4 = "CREATE VIEW employee_weekly_hours AS " +
+                                                       " SELECT lt.employee_ID, e.employee_Fname AS First_Name, e.employee_Lname AS Last_Name, " + 
+                                                       " TRUNC(lt.log_date, 'IW') as week_start_date,  -- how do we know it is the whole week (7 days) " + 
+                                                       " SUM(EXTRACT(HOUR FROM (lt.total_worked_time))) as weekly_worked_hours " + 
+                                                       " FROM Log_Time lt JOIN Employee e ON e.employee_ID = lt.employee_ID" + 
+                                                       " WHERE e.employee_ID = " + employee_ID +
+                                                       " GROUP BY lt.employee_ID, e.employee_Fname, e.employee_Lname, TRUNC(lt.log_date, 'IW')";
+                                    stmt.executeQuery(sql_view4);
+                                                
+                                    String runview4 = "SELECT * FROM employee_weekly_hours";
+                                    stmt.executeQuery(runview4); //ResultSet view4 = 
                                     //print?
-                                    /*
-                                    while (view1.next()) {
-                                        String times = view1.getString("");
-                                        System.out.println(times);
-                                    }
-                                    view1.close();
-                                    */
                                     break;                                
                                 
-                                case 2: //weekly view
-                                    String sql_view2 = "SELECT * FROM weekly_view";
-                                    ResultSet view2 = stmt.executeQuery(sql_view2);
-                                    //print?
-                                    break;
-                            
-                                case 3: //view 3
-                                    String sql_view3 = "SELECT * FROM view3";
-                                    ResultSet view3 = stmt.executeQuery(sql_view3);
+                                case 2: //employee_weekly_status view
+                                    //Need employee ID -- employee_ID (asked at the beginning
+                                            
+                                    //Erase/Drop previous view
+                                    String sql_drop5 = "DROP VIEW employee_weekly_status";
+                                    stmt.executeQuery(sql_drop5);
+                                    
+                                    //VIEW NOT CREATED YET, THIS IS AN EXAMPLE TO PASTE ON TOP -- IN THE WHERE CLAUSE ASKED ID
+                                    String sql_view5 = "CREATE VIEW employee_weekly_status AS " +
+                                                       " SELECT lt.employee_ID, e.employee_Fname AS First_Name, e.employee_Lname AS Last_Name, " + 
+                                                       " TRUNC(lt.log_date, 'IW') as week_start_date,  -- how do we know it is the whole week (7 days) " + 
+                                                       " SUM(EXTRACT(HOUR FROM (lt.total_worked_time))) as weekly_worked_hours " + 
+                                                       " FROM Log_Time lt JOIN Employee e ON e.employee_ID = lt.employee_ID" + 
+                                                       " WHERE e.employee_ID = " + employee_ID +
+                                                       " GROUP BY lt.employee_ID, e.employee_Fname, e.employee_Lname, TRUNC(lt.log_date, 'IW')";
+                                    stmt.executeQuery(sql_view5);
+                                                
+                                    String runview5 = "SELECT * FROM employee_weekly_status";
+                                    stmt.executeQuery(runview5); //ResultSet view4 = 
                                     //print?
                                     break;
                             
                                 default:
                                     System.out.println("Invalid option.");
                                     break;
-                         
-                                
+                           
                              }
                          }
                          
