@@ -70,14 +70,15 @@ public class CS470_GroupProject {
                                 System.out.println("Enter 1 if you want to update an existing table"); //(UPDATE, DELETE, INSERT)
                                 System.out.println("Enter 2 if you want to see a view"); // Owner = 3 views (daily_status, weekly_hours, employee_weekly_status)
                                 System.out.println("Enter 3 if you want to grant privileges"); //owner privilege...
-                                System.out.println("Enter 4 to Quit");
+                                System.out.println("Enter 4 if you want to revoke privileges");
+                                System.out.println("Enter 5 to Quit");
                 
                                 //Read input
                                 String owner_input = keyboard.readLine();
                                 int owner_option = Integer.parseInt(owner_input);
                 
                                 //To quit
-                                if (owner_option == 4) {
+                                if (owner_option == 5) {
                                 break;
                                 }
                         
@@ -539,7 +540,7 @@ public class CS470_GroupProject {
                                             break;
                                         }
                         
-                                      
+                                        // skips to privileges instead of executing this for some reason
                                         switch (owner_view_option) {
                                             case 1: //daily_status view
                                                 
@@ -553,8 +554,8 @@ public class CS470_GroupProject {
                                                                            " ELSE 'Late' " + 
                                                                        " END AS status " + 
                                                                    " FROM Log_Time lt JOIN Employee e ON e.employee_ID = lt.employee_ID";
-                                                stmt.executeQuery(sql_view1); 
-                                                
+                                                stmt.executeQuery(sql_view1);
+
                                                 String runView1 = "SELECT * FROM daily_status"; //Does this show the view in SQL Developer?
                                                 stmt.executeQuery(runView1); //ResultSet view1 = 
                                                 //print?
@@ -566,7 +567,8 @@ public class CS470_GroupProject {
                                                 view1.close();
                                                 */
                                                 break;                                
-                                
+
+                                            // SQL Exception:ORA-00942: table or view does not exist
                                             case 2: //weekly_hours view
                                             
                                                 //Erase/Drop previous view
@@ -585,7 +587,8 @@ public class CS470_GroupProject {
                                                 stmt.executeQuery(runview2); //ResultSet view2 = 
                                                 //print?
                                                 break;
-                                                
+
+                                            // SQL Exception: ORA-00942: table or view does not exist
                                             case 3: //employee_weekly_status view
                                                 //Need employee ID Owner wants to access
                                                 System.out.println("\nEnter the employee's ID you want to see the view of: (format: 0000)");
@@ -658,6 +661,8 @@ public class CS470_GroupProject {
                                                 break;
                                             case 7:
                                                 Runtime.getRuntime().halt(0);
+                                            default:
+                                                break;
                                         }
 
                                         System.out.println("Enter the option for the privilege you would like to grant");
@@ -694,13 +699,95 @@ public class CS470_GroupProject {
                                                 break;
                                             case 6:
                                                 Runtime.getRuntime().halt(0);
+                                            default:
+                                                break;
+                                        }
+                                    case 4: // revoke privileges
+                                        System.out.println("Enter the username for the user you would like to revoke privileges from: ");
+
+                                        // User that you are revoking privileges from
+                                        String revoke_privileges_user = keyboard.readLine();
+
+//                                        System.out.println("Enter the table you would like to revoke authorization to");
+                                        System.out.println("Enter the option for the table you want to revoke privileges for");
+                                        System.out.println("Enter 1 if you want to revoke privileges to the Owner Table");
+                                        System.out.println("Enter 2 if you want to revoke privileges to the Employee Table");
+                                        System.out.println("Enter 3 if you want to revoke privileges to the Department Table");
+                                        System.out.println("Enter 4 if you want to revoke privileges to the Shift_Type Table");
+                                        System.out.println("Enter 5 if you want to revoke privileges to the Employee_Shift_Schedule Table");
+                                        System.out.println("Enter 6 if you want to revoke privileges to the Log_Time Table");
+                                        System.out.println("Enter 7 to Quit");
+
+                                        // Read input
+                                        int revoke_table_privilege = Integer.parseInt(keyboard.readLine());
+
+                                        // Table permissions are being revoked for
+                                        String revoke_privileges_table = "";
+
+                                        switch (revoke_table_privilege) {
+                                            case 1:
+                                                revoke_privileges_table = "Owner";
+                                                break;
+                                            case 2:
+                                                revoke_privileges_table = "Employee";
+                                                break;
+                                            case 3:
+                                                revoke_privileges_table = "Department";
+                                                break;
+                                            case 4:
+                                                revoke_privileges_table = "Shift_Type";
+                                                break;
+                                            case 5:
+                                                revoke_privileges_table = "Employee_Shift_Schedule";
+                                                break;
+                                            case 6:
+                                                revoke_privileges_table = "Log_Time";
+                                                break;
+                                            case 7:
+                                                Runtime.getRuntime().halt(0);
+                                            default:
+                                                break;
                                         }
 
+                                        System.out.println("Enter the option for the privilege you would like to revoke");
+                                        System.out.println("Enter 1 if you want to revoke SELECT privileges");
+                                        System.out.println("Enter 2 if you want to revoke INSERT privileges");
+                                        System.out.println("Enter 3 if you want to revoke UPDATE privileges");
+                                        System.out.println("Enter 4 if you want to revoke DELETE privileges");
+                                        System.out.println("Enter 5 if you want to revoke ALL privileges");
+                                        System.out.println("Enter 6 to Quit");
 
+                                        //Read input
+                                        int revoke_privileges_option = Integer.parseInt(keyboard.readLine());
 
+                                        switch (revoke_privileges_option) {
+                                            case 1:
+                                                String sql_privilege1 = "REVOKE SELECT ON " + revoke_privileges_table + " from " + revoke_privileges_user;
+                                                stmt.executeUpdate(sql_privilege1);
+                                                break;
+                                            case 2:
+                                                String sql_privilege2 = "REVOKE INSERT ON " + revoke_privileges_table + " from " + revoke_privileges_user;
+                                                stmt.executeUpdate(sql_privilege2);
+                                                break;
+                                            case 3:
+                                                String sql_privilege3 = "REVOKE UPDATE ON " + revoke_privileges_table + " from " + revoke_privileges_user;
+                                                stmt.executeUpdate(sql_privilege3);
+                                                break;
+                                            case 4:
+                                                String sql_privilege4 = "REVOKE DELETE ON " + revoke_privileges_table + " from " + revoke_privileges_user;
+                                                stmt.executeUpdate(sql_privilege4);
+                                                break;
+                                            case 5:
+                                                String sql_privilege5 = "REVOKE ALL PRIVILEGES ON " + revoke_privileges_table + " from " + revoke_privileges_user;
+                                                stmt.executeUpdate(sql_privilege5);
+                                                break;
+                                            case 6:
+                                                Runtime.getRuntime().halt(0);
+                                            default:
+                                                break;
+                                        }
                                     
-//STILL NEED TO WORK HERE                                 
-                            
+//STILL NEED TO WORK HERE
                                     default:
                                         System.out.println("Invalid option.");
                                         break;
@@ -710,8 +797,7 @@ public class CS470_GroupProject {
                             }   
                                                     
                         }
-                   
-                        
+
                    case 2: //Employee
                         System.out.println("Enter your first name");
                         String employee_Fname = keyboard.readLine();
@@ -761,7 +847,7 @@ public class CS470_GroupProject {
                                     stmt.executeQuery(sql_view4);
                                                 
                                     String runview4 = "SELECT * FROM employee_weekly_hours";
-                                    stmt.executeQuery(runview4); //ResultSet view4 = 
+                                    stmt.executeQuery(runview4);
                                     //print?
                                     break;                                
                                 
