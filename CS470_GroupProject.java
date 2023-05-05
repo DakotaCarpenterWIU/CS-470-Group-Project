@@ -141,6 +141,19 @@ public class CS470_GroupProject {
                                                             String sql_new1 = "UPDATE Owner SET owner_ID = " + new_OwnerID + " WHERE owner_ID = " + owner_id;
                                                             stmt.executeQuery(sql_new1);
                                                             System.out.println("Owner ID updated successfully.");
+                                                            
+                                                            ResultSet up_1 = stmt.executeQuery("SELECT * FROM Owner"); 
+                                                
+                                                            while (up_1.next()) {
+                                                                String o_ID = up_1.getString("owner_ID");
+                                                                System.out.println("\n");
+                                                                System.out.println(o_ID);
+                                                                String o_pass = up_1.getString("owner_password");
+                                                                System.out.println(o_pass);
+                                                                
+                                                            }
+                                                            up_1.close();
+                                                
                                                             Runtime.getRuntime().halt(0);
 
                                                         case 2: // password
@@ -564,17 +577,20 @@ public class CS470_GroupProject {
                                                                    " FROM Log_Time lt JOIN Employee e ON e.employee_ID = lt.employee_ID";
                                                 stmt.executeQuery(sql_view1); 
                                                 
-                                                String runView1 = "SELECT * FROM daily_status"; //Does this show the view in SQL Developer?
-                                                stmt.executeQuery(runView1); //ResultSet view1 = 
-                                                //print?
-                                                /*
+                                                ResultSet view1 = stmt.executeQuery("SELECT * FROM daily_status"); //ResultSet view1 = 
+                                                
                                                 while (view1.next()) {
-                                                String times = view1.getString("");
-                                                System.out.println(times);
+                                                    String em_Fname = view1.getString("First_Name");
+                                                    System.out.println("\n");
+                                                    System.out.println(em_Fname);
+                                                    String em_Lname = view1.getString("Last_Name");
+                                                    System.out.println(em_Lname);
+                                                    String em_status = view1.getString("status");
+                                                    System.out.println(em_status);
                                                 }
                                                 view1.close();
-                                                */
-                                                break;                                
+                                                
+                                                Runtime.getRuntime().halt(0);                                
                                 
                                             case 2: //weekly_hours view
                                             
