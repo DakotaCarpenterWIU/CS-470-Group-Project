@@ -616,6 +616,88 @@ public class CS470_GroupProject {
                                         }
                             
                                     case 3: //grant privileges
+                                        System.out.println("Enter the username for the user you would like to grant privileges to: ");
+
+                                        // User that you are granting privileges to
+                                        String grant_privileges_user = keyboard.readLine();
+
+//                                        System.out.println("Enter the table you would like to give authorization to");
+                                        System.out.println("Enter the option for the table you want to grant privileges for");
+                                        System.out.println("Enter 1 if you want to grant privileges to the Owner Table");
+                                        System.out.println("Enter 2 if you want to grant privileges to the Employee Table");
+                                        System.out.println("Enter 3 if you want to grant privileges to the Department Table");
+                                        System.out.println("Enter 4 if you want to grant privileges to the Shift_Type Table");
+                                        System.out.println("Enter 5 if you want to grant privileges to the Employee_Shift_Schedule Table");
+                                        System.out.println("Enter 6 if you want to grant privileges to the Log_Time Table");
+                                        System.out.println("Enter 7 to Quit");
+
+                                        // Read input
+                                        int grant_table_privilege = Integer.parseInt(keyboard.readLine());
+
+                                        // Table permissions are being granted for
+                                        String grant_privileges_table = "";
+
+                                        switch (grant_table_privilege) {
+                                            case 1:
+                                                grant_privileges_table = "Owner";
+                                                break;
+                                            case 2:
+                                                grant_privileges_table = "Employee";
+                                                break;
+                                            case 3:
+                                                grant_privileges_table = "Department";
+                                                break;
+                                            case 4:
+                                                grant_privileges_table = "Shift_Type";
+                                                break;
+                                            case 5:
+                                                grant_privileges_table = "Employee_Shift_Schedule";
+                                                break;
+                                            case 6:
+                                                grant_privileges_table = "Log_Time";
+                                                break;
+                                            case 7:
+                                                Runtime.getRuntime().halt(0);
+                                        }
+
+                                        System.out.println("Enter the option for the privilege you would like to grant");
+                                        System.out.println("Enter 1 if you want to grant SELECT privileges");
+                                        System.out.println("Enter 2 if you want to grant INSERT privileges");
+                                        System.out.println("Enter 3 if you want to grant UPDATE privileges");
+                                        System.out.println("Enter 4 if you want to grant DELETE privileges");
+                                        System.out.println("Enter 5 if you want to grant ALL privileges");
+                                        System.out.println("Enter 6 to Quit");
+
+                                        //Read input
+                                        int grant_privileges_option = Integer.parseInt(keyboard.readLine());
+
+                                        switch (grant_privileges_option) {
+                                            case 1:
+                                                String sql_privilege1 = "GRANT SELECT ON " + grant_privileges_table + " to " + grant_privileges_user;
+                                                stmt.executeUpdate(sql_privilege1);
+                                                break;
+                                            case 2:
+                                                String sql_privilege2 = "GRANT INSERT ON " + grant_privileges_table + " to " + grant_privileges_user;
+                                                stmt.executeUpdate(sql_privilege2);
+                                                break;
+                                            case 3:
+                                                String sql_privilege3 = "GRANT UPDATE ON " + grant_privileges_table + " to " + grant_privileges_user;
+                                                stmt.executeUpdate(sql_privilege3);
+                                                break;
+                                            case 4:
+                                                String sql_privilege4 = "GRANT DELETE ON " + grant_privileges_table + " to " + grant_privileges_user;
+                                                stmt.executeUpdate(sql_privilege4);
+                                                break;
+                                            case 5:
+                                                String sql_privilege5 = "GRANT ALL PRIVILEGES ON " + grant_privileges_table + " to " + grant_privileges_user;
+                                                stmt.executeUpdate(sql_privilege5);
+                                                break;
+                                            case 6:
+                                                Runtime.getRuntime().halt(0);
+                                        }
+
+
+
                                     
 //STILL NEED TO WORK HERE                                 
                             
